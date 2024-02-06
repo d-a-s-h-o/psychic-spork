@@ -1,0 +1,48 @@
+version: '3.8'
+name: bin404
+services:
+  php-fpm:
+    image: php:fpm
+    volumes:
+      - .:/var/www/html
+      - ./files:/var/www/html/files
+      - ./php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - asgard
+    environment:
+      - PHP_UPLOAD_MAX_FILESIZE=10000M
+      - PHP_POST_MAX_SIZE=10000M
+      - PHP_MEMORY_LIMIT=4000M
+      - PHP_MAX_EXECUTION_TIME=1200
+      - PHP_MAX_INPUT_TIME=1200
+      - UPLOAD_MAX_FILESIZE=10000M
+      - POST_MAX_SIZE=10000M
+      - MEMORY_LIMIT=4000M
+      - MAX_EXECUTION_TIME=1200
+      - MAX_INPUT_TIME=1200
+      - UPLOAD_LIMIT=10000M
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - .:/var/www/html
+      - ./site.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - asgard
+    environment:
+      - NGINX_CLIENT_MAX_BODY_SIZE=10000M
+      - PHP_UPLOAD_MAX_FILESIZE=10000M
+      - PHP_POST_MAX_SIZE=10000M
+      - PHP_MEMORY_LIMIT=4000M
+      - PHP_MAX_EXECUTION_TIME=1200
+      - PHP_MAX_INPUT_TIME=1200
+      - UPLOAD_MAX_FILESIZE=10000M
+      - POST_MAX_SIZE=10000M
+      - MEMORY_LIMIT=4000M
+      - MAX_EXECUTION_TIME=1200
+      - MAX_INPUT_TIME=1200
+      - UPLOAD_LIMIT=10000M
+
+networks:
+  asgard:
+    external: true
